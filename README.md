@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-If you would still prefer to do the installation manually, follow these steps:
+Installation follow these steps:
 
 Clone the repo:
 
@@ -14,8 +14,11 @@ cd zkid-backend-alpha-v1
 Install the dependencies:
 
 ```bash
-yarn install
+npm install
 ```
+
+[Mongo DB installation](https://www.mongodb.com/try/download/community)
+
 
 Set the environment variables:
 
@@ -43,7 +46,7 @@ cp .env.example .env
 - **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
 - **Error handling**: centralized error handling mechanism
 - **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
-- **Dependency management**: with [Yarn](https://yarnpkg.com)
+- **Dependency management**: with [npm](https://yarnpkg.com)
 - **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
 - **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
 - **Santizing**: sanitize request data against xss and query injection
@@ -61,29 +64,29 @@ cp .env.example .env
 Running locally:
 
 ```bash
-yarn dev
+npm dev
 ```
 
 Running in production:
 
 ```bash
-yarn start
+npm start
 ```
 
 Linting:
 
 ```bash
 # run ESLint
-yarn lint
+npm lint
 
 # fix ESLint errors
-yarn lint:fix
+npm lint:fix
 
 # run prettier
-yarn prettier
+npm prettier
 
 # fix prettier errors
-yarn prettier:fix
+npm prettier:fix
 ```
 
 ## Environment Variables
@@ -311,4 +314,4 @@ To maintain a consistent coding style across different IDEs, the project contain
 The project uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
 
 Change the src/config/config.js to configure SMTP transport for different kind of authentication mechanism
-Current configuration supports gmail oauth mechanism
+Current configuration supports plain login mechanism
