@@ -37,7 +37,7 @@ cp .env.example .env
 - [Logging](#logging)
 - [Custom Mongoose Plugins](#custom-mongoose-plugins)
 - [Linting](#linting)
-- [Nodemailer] (#nodemailer)
+- [Nodemailer](#Nodemailer)
 
 ## Features
 
@@ -59,7 +59,7 @@ cp .env.example .env
 - **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
 - **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
 - **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
-- **Node mailer**: Uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
+- **Nodemailer**: Uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
 
 Running locally:
 
@@ -310,8 +310,9 @@ To prevent a certain file or directory from being linted, add it to `.eslintigno
 
 To maintain a consistent coding style across different IDEs, the project contains `.editorconfig`
 
-## nodemailer
+## Nodemailer
 The project uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
 
-Change the src/config/config.js to configure SMTP transport for different kind of authentication mechanism
+Change the src/config/config.js to configure SMTP transport for different kind of authentication mechanism.
+
 Current configuration supports plain login mechanism
