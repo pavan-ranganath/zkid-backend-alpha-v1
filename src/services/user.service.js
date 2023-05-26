@@ -8,11 +8,8 @@ const NewUser = require('../models/newUser.model');
  * @returns {Promise<User>}
  */
 const entradaMethodCreateUser = async (userBody) => {
-  if (await NewUser.isEmailTaken(userBody.username)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Username already registered');
-  }
-  if (await NewUser.isPublicKeyTaken(userBody.publicKey)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Public key already exists');
+  if (await NewUser.isEmailAndPublic(userBody.username, userBody.publicKey)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username / Public key already exists');
   }
   return NewUser.create(userBody);
 };
@@ -23,12 +20,9 @@ const checkEmailExists = async (email) => {
   }
 };
 
-const checkEmailEntradaCustomUser = async (email, publicKey) => {
-  if (await NewUser.isEmailTaken(email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
-  if (await NewUser.isPublicKeyTaken(publicKey)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Public key already exists');
+const checkEmailAndPublicKeyExists = async (username, publicKey) => {
+  if (await NewUser.isEmailAndPublic(username, publicKey)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Username / Public key exists');
   }
 };
 
@@ -53,7 +47,7 @@ const getEntradaAuthUserByPublicKey = async (publicKey) => {
 module.exports = {
   checkEmailExists,
   entradaMethodCreateUser,
-  checkEmailEntradaCustomUser,
+  checkEmailAndPublicKeyExists,
   getEntradaAuthUserByEmail,
   getEntradaAuthUserByPublicKey,
 };

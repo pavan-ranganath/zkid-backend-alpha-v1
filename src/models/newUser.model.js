@@ -66,8 +66,8 @@ newUserSchema.statics.isEmailTaken = async function (email) {
  * @param {string} publicKey - The user's public key
  * @returns {Promise<boolean>}
  */
-newUserSchema.statics.isPublicKeyTaken = async function (publicKey) {
-  const user = await this.findOne({ publicKey });
+newUserSchema.statics.isEmailAndPublic = async function (username, publicKey) {
+  const user = await this.findOne({ publicKey, username });
   return !!user;
 };
 

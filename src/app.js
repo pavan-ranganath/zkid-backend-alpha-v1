@@ -41,6 +41,7 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
+// session
 app.use(
   session({
     secret: 'b24ed0f617408d34f1d744095c752f3326699ad46fff89591aeb664237b5c1514',
@@ -48,7 +49,6 @@ app.use(
     saveUninitialized: true,
     cookie: {
       sameSite: true,
-
       secure: false,
       maxAge: 360000,
       httpOnly: true, // Ensure to not expose session cookies to clientside scripts

@@ -3,7 +3,9 @@ const authRoute = require('./auth.route');
 
 const router = express.Router();
 
+// API routes
 const defaultRoutes = [
+  // Login and registration
   {
     path: '/auth',
     route: authRoute,

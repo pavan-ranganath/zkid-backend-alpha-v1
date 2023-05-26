@@ -9,16 +9,25 @@ const logger = require('../config/logger');
 
 const ed25519EllipticLib = new eddsa.eddsa('ed25519');
 
+/**
+ * Removes the '-----BEGIN PUBLIC KEY-----' and '-----END PUBLIC KEY-----' from string
+ * @param {String} publicKey
+ * @returns key
+ */
 const readPublicKeyFromPem = (publicKey) => {
   const pemToBuffer = (pem) =>
     Buffer.from(
       pem.replace('-----BEGIN PUBLIC KEY-----', '').replace('-----END PUBLIC KEY-----', '').replace(/\n/g, ''),
       'base64'
     );
-
   return pemToBuffer(publicKey);
 };
 
+/**
+ * Removes the '-----BEGIN PRIVATE KEY-----' and '-----END PRIVATE KEY-----' from string
+ * @param {String} privateKey
+ * @returns
+ */
 const readPrivateKeyFromPem = (privateKey) => {
   const pemToBuffer = (pem) =>
     Buffer.from(
@@ -38,7 +47,7 @@ const Ed25519PrivateKey = asn1.define('Ed25519PrivateKey', function () {
   );
 });
 
-// ASN.1 schema for Ed25519 public key
+// Define the ASN.1 schema for Ed25519 public key
 const Ed25519PublicKey = asn1.define('PublicKey', function () {
   this.seq().obj(
     this.key('tbsCertificate').seq().obj(this.key('signatureAlgorithm').objid()),
@@ -46,6 +55,11 @@ const Ed25519PublicKey = asn1.define('PublicKey', function () {
   );
 });
 
+/**
+ * Read openssl public key and parse it through ASN.1 decoder
+ * @param {String} OpensslEd25519PublicKey
+ * @returns public key
+ */
 const readOpenSslPublicKeys = (OpensslEd25519PublicKey) => {
   try {
     const extractedOnlyOpensslPublicKey = readPublicKeyFromPem(OpensslEd25519PublicKey);
@@ -58,6 +72,11 @@ const readOpenSslPublicKeys = (OpensslEd25519PublicKey) => {
   }
 };
 
+/**
+ * Read openssl pivate key and parse it through ASN.1 decoder
+ * @param {String} OpensslEd25519PrivateKey
+ * @returns private key
+ */
 const readOpenSslPrivateKeys = (OpensslEd25519PrivateKey) => {
   try {
     const extractedOnlyOpensslPrivateKey = readPrivateKeyFromPem(OpensslEd25519PrivateKey);
@@ -70,6 +89,12 @@ const readOpenSslPrivateKeys = (OpensslEd25519PrivateKey) => {
   }
 };
 
+/**
+ * Read openssl pivate key and public key and parse it through ASN.1 decoder
+ * @param {String} privateKey
+ * @param {String} publicKey
+ * @returns
+ */
 const readKeysFromPem = (privateKey, publicKey) => {
   const publicKeyBuffer = readOpenSslPublicKeys(publicKey);
   const privateKeyBuffer = readOpenSslPrivateKeys(privateKey);
@@ -88,6 +113,13 @@ const readOpenSslKeys = (OpensslEd25519PrivateKey, OpensslEd25519PublicKey) => {
     throw new Error('Failed to Read the keys');
   }
 };
+
+/**
+ * Sign the message using ED25519 private key
+ * @param {String} msg
+ * @param {Uint8Array} privateKey
+ * @returns
+ */
 const sign = (msg, privateKey) => {
   try {
     return ed25519EllipticLib.sign(msg, privateKey);
@@ -97,6 +129,10 @@ const sign = (msg, privateKey) => {
   }
 };
 
+/**
+ * Generate key pair
+ * @returns generate public and private key
+ */
 const generateKeyPair = () => {
   try {
     // let t = new eddsa.ec("ed25519")
@@ -106,10 +142,24 @@ const generateKeyPair = () => {
     throw new Error('Error generating keypair');
   }
 };
-const verifySign = (signedMsg, plainMsg, clientPublicKey) => {
-  return ed25519EllipticLib.verify(plainMsg, signedMsg, clientPublicKey.toString('hex'));
+
+/**
+ * Verify signature using public key
+ * @param {Buffer} signedMsg
+ * @param {Buffer} plainMsg
+ * @param {Buffer} clientPublicKey
+ * @returns
+ */
+const verifySign = (signature, plainMsg, clientPublicKey) => {
+  return ed25519EllipticLib.verify(plainMsg, signature, clientPublicKey.toString('hex'));
 };
 
+/**
+ * Generate shared key using
+ * @param {Uint8Array} privateKey
+ * @param {Uint8Array} publicKey
+ * @returns
+ */
 const getSharedKey = (privateKey, publicKey) => {
   try {
     return tweetNacl.box.before(publicKey, privateKey);
@@ -119,9 +169,20 @@ const getSharedKey = (privateKey, publicKey) => {
   }
 };
 
+/**
+ * Convert Private Ed25519 to curve25519
+ * @param {Uint8Array} privateKey
+ * @returns key
+ */
 const convertEd25519PrivateKeyToCurve25519 = (privateKey) => {
   return _ed2curve.convertSecretKey(privateKey);
 };
+
+/**
+ * Convert Public Ed25519 to curve25519
+ * @param {Uint8Array} publicKey
+ * @returns key
+ */
 const convertEd25519PublicKeyToCurve25519 = (publicKey) => {
   return _ed2curve.convertPublicKey(publicKey);
 };
@@ -148,6 +209,8 @@ const decryptWithSharedKey = (encryptedMessage, sharedKey) => {
   }
   return tweetNaclUtil.encodeUTF8(decrypted);
 };
+
+// Generate random bytes
 const generateRandomBytes = () => {
   return tweetNacl.randomBytes(tweetNacl.box.nonceLength);
 };
