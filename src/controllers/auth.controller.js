@@ -24,7 +24,7 @@ const EntadaAuthRegistration = catchAsync(async (req, res) => {
     username,
     req
   );
-  logger.log('ephemeralKeyPair.publicKey', ephemeralKeyPair.publicKey);
+  logger.debug('ephemeralKeyPair.publicKey', ephemeralKeyPair.publicKey);
   const respObj = {
     challengeEncrypt,
     signedChallengeEncrypt: signedChallengeEncrypt.toHex(),
@@ -38,7 +38,7 @@ const EntadaAuthRegistrationVerify = catchAsync(async (req, res) => {
   const { body } = req;
   const { encryptedData } = body;
   const { signature } = body;
-  // logger.log(req.session);
+  // logger.debug(req.session);
 
   if (req.session.user) {
     const { user } = req.session;
@@ -84,7 +84,7 @@ const EntadaAuthLogin = catchAsync(async (req, res) => {
   const { username } = body;
   const { plainMsg } = body;
   const { signature } = body;
-  const { user, ephemeralKeyPair, sharedKey } = await authService.loginUsingPublicKey(username, plainMsg, signature);
+  const { user, ephemeralKeyPair, sharedKey } = await authService.debuginUsingPublicKey(username, plainMsg, signature);
 
   // CREATE SESSION
   req.session.user = user;

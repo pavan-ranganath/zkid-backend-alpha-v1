@@ -94,12 +94,12 @@ async function entradaAuthRegistration(body, username, req) {
 
   // GENERATE CHALLENGE
   const challenge = Buffer.from(generateRandomBytes()).toString('base64');
-  logger.log('challenge', challenge);
+  logger.debug('challenge', challenge);
 
   // GENERTE EPHEMERAL KEY
   const ephemeralKeyPair = generateKeyPair();
-  logger.log('serverPrivateKey', Buffer.from(ephemeralKeyPair.secretKey).toString('base64'));
-  logger.log('serverPublicKey', Buffer.from(ephemeralKeyPair.publicKey).toString('base64'));
+  logger.debug('serverPrivateKey', Buffer.from(ephemeralKeyPair.secretKey).toString('base64'));
+  logger.debug('serverPublicKey', Buffer.from(ephemeralKeyPair.publicKey).toString('base64'));
 
   // ED25519 -> curve25519
   const clientCurve25519PublicKey = convertEd25519PublicKeyToCurve25519(clientPublicKey);
@@ -107,7 +107,7 @@ async function entradaAuthRegistration(body, username, req) {
 
   // GENERATE SHARED SECRET
   const sharedKey = getSharedKey(ServerCurve25519PrivateKey, clientCurve25519PublicKey);
-  logger.log('Server shared key (Base64):', Buffer.from(sharedKey).toString('base64'));
+  logger.debug('Server shared key (Base64):', Buffer.from(sharedKey).toString('base64'));
 
   // ENCRYPT CHALLENGE USING USER PUBLIC KEY
   const challengeEncrypt = encryptWithSharedKey(challenge, sharedKey);

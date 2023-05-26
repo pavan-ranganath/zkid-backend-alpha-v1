@@ -70,32 +70,6 @@ Running in production:
 yarn start
 ```
 
-Testing:
-
-```bash
-# run all tests
-yarn test
-
-# run all tests in watch mode
-yarn test:watch
-
-# run test coverage
-yarn coverage
-```
-
-Docker:
-
-```bash
-# run docker container in development mode
-yarn docker:dev
-
-# run docker container in production mode
-yarn docker:prod
-
-# run all tests in a docker container
-yarn docker:test
-```
-
 Linting:
 
 ```bash
@@ -166,7 +140,7 @@ List of available routes:
 
 **Auth routes**:\
 `POST /v1/auth/generate-entrada-registration-options` - register\
-`POST /v1/auth/verify-entrada-registration` - veify register\
+`POST /v1/auth/verify-entrada-registration` - verify register
 
 `POST /v1/auth/entrada-login` - login\
 `POST /v1/auth/verify-email` - verify email
