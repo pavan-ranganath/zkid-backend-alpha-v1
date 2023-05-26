@@ -52,41 +52,37 @@ cp .env.example .env
 - **Santizing**: sanitize request data against xss and query injection
 - **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 - **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
-- **CI**: continuous integration with [Travis CI](https://travis-ci.org)
 - **Docker support**
-- **Code coverage**: using [coveralls](https://coveralls.io)
-- **Code quality**: with [Codacy](https://www.codacy.com)
 - **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
-- **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
-- **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
+- **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)'
 - **Nodemailer**: Uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
 
 Running locally:
 
 ```bash
-npm dev
+npm run dev
 ```
 
 Running in production:
 
 ```bash
-npm start
+npm run start
 ```
 
 Linting:
 
 ```bash
 # run ESLint
-npm lint
+npm run lint
 
 # fix ESLint errors
-npm lint:fix
+npm run lint:fix
 
 # run prettier
-npm prettier
+npm run prettier
 
 # fix prettier errors
-npm prettier:fix
+npm run prettier:fix
 ```
 
 ## Environment Variables
