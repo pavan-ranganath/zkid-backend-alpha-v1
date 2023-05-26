@@ -34,6 +34,7 @@ cp .env.example .env
 - [Logging](#logging)
 - [Custom Mongoose Plugins](#custom-mongoose-plugins)
 - [Linting](#linting)
+- [Nodemailer] (#nodemailer)
 
 ## Features
 
@@ -55,8 +56,7 @@ cp .env.example .env
 - **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
 - **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
 - **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
-
-## Commands
+- **Node mailer**: Uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
 
 Running locally:
 
@@ -99,15 +99,13 @@ MONGODB_URL=mongodb://127.0.0.1:27017/zkid-alpha-v1
 
 # SMTP configuration options for the email service
 # For testing, you can use a fake SMTP service like Ethereal: https://ethereal.email/create
-SMTP_SERVICE=PLAIN | gmail
+SMTP_AUTH_TYPE=login | oauth2
 SMTP_HOST=email-server
-SMTP_PORT=587
+SMTP_PORT=465
 SMTP_USERNAME=email-server-username
 SMTP_PASSWORD=email-server-password
 EMAIL_FROM=support@yourapp.com
-SMTP_CLIENTID=client-id
-SMTP_CLIENTSECRET=client-secret
-SMTP_REFRESHTOKEN=refresh-token-string
+
 CLIENT_DOMAIN=localhost:4200
 
 # JWT
@@ -308,3 +306,9 @@ To modify the ESLint configuration, update the `.eslintrc.json` file. To modify 
 To prevent a certain file or directory from being linted, add it to `.eslintignore` and `.prettierignore`.
 
 To maintain a consistent coding style across different IDEs, the project contains `.editorconfig`
+
+## nodemailer
+The project uses the [nodemailer](https://nodemailer.com/about/) package to send emails.
+
+Change the src/config/config.js to configure SMTP transport for different kind of authentication mechanism
+Current configuration supports gmail oauth mechanism
