@@ -5,7 +5,6 @@ const objectId = (value, helpers) => {
   return value;
 };
 
-
 module.exports = {
   objectId,
 };

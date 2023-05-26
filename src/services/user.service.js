@@ -1,8 +1,6 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const NewUser = require('../models/newUser.model');
-
 
 /**
  * Create a user
@@ -19,13 +17,11 @@ const entradaMethodCreateUser = async (userBody) => {
   return NewUser.create(userBody);
 };
 
-
-
 const checkEmailExists = async (email) => {
   if (await NewUser.isEmailTaken(email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-}
+};
 
 const checkEmailEntradaCustomUser = async (email, publicKey) => {
   if (await NewUser.isEmailTaken(email)) {
@@ -34,8 +30,7 @@ const checkEmailEntradaCustomUser = async (email, publicKey) => {
   if (await NewUser.isPublicKeyTaken(publicKey)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Public key already exists');
   }
-}
-
+};
 
 /**
  * Get user by email
@@ -60,5 +55,5 @@ module.exports = {
   entradaMethodCreateUser,
   checkEmailEntradaCustomUser,
   getEntradaAuthUserByEmail,
-  getEntradaAuthUserByPublicKey
+  getEntradaAuthUserByPublicKey,
 };

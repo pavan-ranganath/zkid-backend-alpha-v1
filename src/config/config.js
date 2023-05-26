@@ -11,8 +11,8 @@ const envVarsSchema = Joi.object()
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: Joi.number()
-    .default(10)
-    .description('minutes after which verify email token expires'),
+      .default(10)
+      .description('minutes after which verify email token expires'),
     SMTP_HOST: Joi.string().description('server that will send the emails'),
     SMTP_PORT: Joi.number().description('port to connect to the email server'),
     SMTP_USERNAME: Joi.string().description('username for email server'),
@@ -31,14 +31,7 @@ module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   mongoose: {
-    url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : '')
-  },
-  jwt: {
-    secret: envVars.JWT_SECRET,
-    accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
-    refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
-    resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
-    verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
+    url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
   },
   jwt: {
     secret: envVars.JWT_SECRET,
@@ -55,12 +48,12 @@ module.exports = {
         // pass: envVars.SMTP_PASSWORD,
         clientId: envVars.SMTP_CLIENTID,
         clientSecret: envVars.SMTP_CLIENTSECRET,
-        refreshToken: envVars.SMTP_REFRESHTOKEN
+        refreshToken: envVars.SMTP_REFRESHTOKEN,
       },
     },
     from: envVars.EMAIL_FROM,
   },
   frontEnd: {
-    domain: envVars.CLIENT_DOMAIN
-  }
+    domain: envVars.CLIENT_DOMAIN,
+  },
 };

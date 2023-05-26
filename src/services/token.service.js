@@ -57,7 +57,6 @@ const verifyToken = async (token, type) => {
   return tokenDoc;
 };
 
-
 /**
  * Generate verify email token
  * @param {User} user

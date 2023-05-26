@@ -5,14 +5,14 @@ const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
 const cors = require('cors');
 const httpStatus = require('http-status');
+const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-var session = require('express-session')
-const MemoryStore = require('memorystore')(session)
 
 const app = express();
 
@@ -26,7 +26,6 @@ app.use(helmet());
 
 // parse json request body
 app.use(express.json());
-
 
 // // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
@@ -42,28 +41,23 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
-
 app.use(
-  session(
-    {
+  session({
     secret: 'b24ed0f617408d34f1d744095c752f3326699ad46fff89591aeb664237b5c1514',
     resave: false,
     saveUninitialized: true,
     cookie: {
       sameSite: true,
-      
-      secure:false,
+
+      secure: false,
       maxAge: 360000,
       httpOnly: true, // Ensure to not expose session cookies to clientside scripts
     },
     store: new MemoryStore({
-      checkPeriod: 86_400_000, // prune expired entries every 24h
+      checkPeriod: 86400000, // prune expired entries every 24h
     }),
-  }
-  ),
+  })
 );
-
-
 
 // v1 api routes
 app.use('/v1', routes);

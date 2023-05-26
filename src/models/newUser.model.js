@@ -57,10 +57,9 @@ newUserSchema.plugin(paginate);
  * @returns {Promise<boolean>}
  */
 newUserSchema.statics.isEmailTaken = async function (email) {
-  const user = await this.findOne({email});
+  const user = await this.findOne({ email });
   return !!user;
 };
-
 
 /**
  * Check if public key is taken
@@ -68,7 +67,7 @@ newUserSchema.statics.isEmailTaken = async function (email) {
  * @returns {Promise<boolean>}
  */
 newUserSchema.statics.isPublicKeyTaken = async function (publicKey) {
-  const user = await this.findOne({publicKey});
+  const user = await this.findOne({ publicKey });
   return !!user;
 };
 

@@ -18,7 +18,7 @@ const entradaAuthRegistration = {
 const entradaAuthRegistrationVerify = {
   body: Joi.object().keys({
     signature: Joi.string().required(),
-    encryptedData: Joi.string().required()
+    encryptedData: Joi.string().required(),
   }),
 };
 const entradaAuthLogin = {
@@ -33,5 +33,5 @@ module.exports = {
   verifyEmail,
   entradaAuthRegistration,
   entradaAuthRegistrationVerify,
-  entradaAuthLogin
+  entradaAuthLogin,
 };

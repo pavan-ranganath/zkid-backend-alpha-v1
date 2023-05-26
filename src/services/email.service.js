@@ -1,19 +1,18 @@
 const nodemailer = require('nodemailer');
-const smtpTransport  = require ("nodemailer/lib/smtp-transport");
+const SmtpTransport = require('nodemailer/lib/smtp-transport');
 const config = require('../config/config');
 const logger = require('../config/logger');
 
-const transport = nodemailer.createTransport(new smtpTransport(config.email.smtp));
+const transport = nodemailer.createTransport(new SmtpTransport(config.email.smtp));
 /* istanbul ignore next */
 if (config.env !== 'test') {
   transport
     .verify()
     .then(() => logger.info('Connected to email server'))
-    .catch(
-      (e) => 
-      { logger.error(e);
-        console.log(config.email.smtp);
-        logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env')});
+    .catch((e) => {
+      logger.error(e);
+      logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env');
+    });
 }
 
 /**
