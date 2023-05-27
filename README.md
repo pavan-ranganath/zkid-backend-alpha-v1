@@ -98,7 +98,7 @@ MONGODB_URL=mongodb://127.0.0.1:27017/zkid-alpha-v1
 
 # SMTP configuration options for the email service
 # For testing, you can use a fake SMTP service like Ethereal: https://ethereal.email/create
-SMTP_AUTH_TYPE=login | oauth2
+SMTP_AUTH_TYPE=login
 SMTP_HOST=email-server
 SMTP_PORT=465
 SMTP_USERNAME=email-server-username
